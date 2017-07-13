@@ -1,6 +1,15 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import businesslogic.BusinessLogic;
+import businesslogic.BusinessLogicImpl;
+import commands.AddProductCommand;
+import commands.Command;
+import commands.PrintShoppingListCommand;
+import commands.RemoveProductCommand;
+import database.Database;
+import database.DatabaseImpl;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ShoppingListApplication {
@@ -11,76 +20,25 @@ public class ShoppingListApplication {
         // 2. Remove product from list
         // 3. Print shopping list to console
         // 4. Exit
+        Database database = new DatabaseImpl();
+        BusinessLogic businessLogic = new BusinessLogicImpl(database);
 
-        List<Product> products = new ArrayList<Product>();
+        Map<Integer, Command> commands = new HashMap<>();
+        commands.put(1, new AddProductCommand(businessLogic));
+        commands.put(2, new RemoveProductCommand(businessLogic));
+        commands.put(3, new PrintShoppingListCommand(businessLogic));
+
         while (true) {
             printProgramMenu();
             int menuItem = getFromUserMenuItemToExecute();
             if (menuItem == 4) {
                 break;
-            }
-            switch (menuItem) {
-                case 1: {
-                    addProductToList(products);
-                    break;
-                }
-                case 2: {
-                    removeProductFromList(products);
-                    break;
-                }
-                case 3: {
-                    printShoppingListToConsole(products);
-                    break;
-                }
+            } else {
+                Command command = commands.get(menuItem);
+                command.execute();
             }
         }
 
-    }
-
-    private static void addProductToList(List<Product> products) {
-        System.out.println();
-        System.out.println("Add product to list execution start!");
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter product title:");
-        String title = sc.nextLine();
-        System.out.print("Enter product description:");
-        String description = sc.nextLine();
-        Product product = new Product();
-        product.setTitle(title);
-        product.setDescription(description);
-        products.add(product);
-        System.out.println("Add product to list execution end!");
-        System.out.println();
-    }
-
-    private static void removeProductFromList(List<Product> products) {
-        System.out.println();
-        System.out.println("Remove product from list execution start!");
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter product title:");
-        final String title = sc.nextLine();
-        Optional<Product> foundProduct = products.stream()
-                .filter(p -> p.getTitle().equals(title))
-                .findFirst();
-        if (foundProduct.isPresent()) {
-            System.out.println("Product with title " + title + " was found and will be removed from list!");
-            Product product = foundProduct.get();
-            products.remove(product);
-        } else {
-            System.out.println("Product with title " + title + " not found and not be removed from list!");
-        }
-        System.out.println("Remove product from list execution end!");
-        System.out.println();
-    }
-
-    private static void printShoppingListToConsole(List<Product> products) {
-        System.out.println();
-        System.out.println("Print shopping list to console execution start!");
-        for (Product product : products) {
-            System.out.println(product.toString());
-        }
-        System.out.println("Print shopping list to console execution end!");
-        System.out.println();
     }
 
     private static void printProgramMenu() {
