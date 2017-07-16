@@ -1,7 +1,7 @@
 
 import businesslogic.BusinessLogic;
 import businesslogic.BusinessLogicImpl;
-import commands.AddProductCommand;
+import commands.AddSubscriberCommand;
 import commands.Command;
 import commands.PrintShoppingListCommand;
 import commands.RemoveProductCommand;
@@ -16,15 +16,15 @@ public class ShoppingListApplication {
 
     public static void main(String[] args) {
         // Use cases:
-        // 1. Add product to list
-        // 2. Remove product from list
-        // 3. Print shopping list to console
+        // 1. Add subscriber to DB
+        // 2. Remove subscriber from DB
+        // 3. Print all subscribers to console
         // 4. Exit
         Database database = new DatabaseImpl();
         BusinessLogic businessLogic = new BusinessLogicImpl(database);
 
         Map<Integer, Command> commands = new HashMap<>();
-        commands.put(1, new AddProductCommand(businessLogic));
+        commands.put(1, new AddSubscriberCommand(businessLogic));
         commands.put(2, new RemoveProductCommand(businessLogic));
         commands.put(3, new PrintShoppingListCommand(businessLogic));
 

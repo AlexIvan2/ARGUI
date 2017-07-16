@@ -2,7 +2,7 @@ package commands;
 
 
 import businesslogic.BusinessLogic;
-import domain.Product;
+import domain.Subscriber;
 
 public class PrintShoppingListCommand implements Command {
 
@@ -16,8 +16,8 @@ public class PrintShoppingListCommand implements Command {
     public void execute() {
         System.out.println();
         System.out.println("Print shopping list to console execution start!");
-        for (Product product : businessLogic.getAllProducts()) {
-            System.out.println(product.getTitle() + "[" + product.getDescription() + "]");
+        for (Subscriber subscriber : businessLogic.getAllSubscribers()) {
+            System.out.println(subscriber.getFirstName() + "[" + subscriber.getLastName() + "]");
         }
         System.out.println("Print shopping list to console execution end!");
         System.out.println();

@@ -2,34 +2,34 @@ package database;
 
 
 import com.google.common.collect.Lists;
-import domain.Product;
+import domain.Subscriber;
 
 import java.util.List;
 import java.util.Optional;
 
 public class DatabaseImpl implements Database{
 
-    private List<Product> products = Lists.newArrayList();
+    private List<Subscriber> subscribers = Lists.newArrayList();
 
     @Override
-    public void addProduct(Product product){
-        products.add(product);
+    public void addSubscriber(Subscriber subscriber){
+        subscribers.add(subscriber);
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        products.remove(product);
+    public void deleteSubscriber(Subscriber subscriber) {
+        subscribers.remove(subscriber);
     }
 
     @Override
-    public List<Product> getAllProducts(){
-        return Lists.newArrayList(products);
+    public List<Subscriber> getAllSubscribers(){
+        return Lists.newArrayList(subscribers);
     }
 
     @Override
-    public Optional<Product> getProductByTitle(String title){
-        return products.stream()
-                .filter(p -> p.getTitle().equals(title))
+    public Optional<Subscriber> getSubscriberByAccountNo(int accountNo){
+        return subscribers.stream()
+                .filter(p -> p.getAccountNo() == accountNo)
                 .findFirst();
     }
 }

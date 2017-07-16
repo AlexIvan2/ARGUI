@@ -1,16 +1,16 @@
 package businesslogic;
 
-import domain.Product;
+import domain.Subscriber;
 
 import java.util.List;
 
 public interface BusinessLogic {
 
-    boolean addProduct(String title, String description);
+    boolean addSubscriber(String firstName, String lastName, double balance);
 
-    boolean removeProductByTitle(String title);
+    boolean removeSubscriberByAccountNo(int accountNo);
 
-    List<Product> getAllProducts();
+    List<Subscriber> getAllSubscribers();
 
 
 }

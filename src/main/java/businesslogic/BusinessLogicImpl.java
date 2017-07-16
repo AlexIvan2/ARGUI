@@ -2,7 +2,7 @@ package businesslogic;
 
 
 import database.Database;
-import domain.Product;
+import domain.Subscriber;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,30 +11,33 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     private Database dao;
 
+
     public BusinessLogicImpl(Database dao){
         this.dao = dao;
     }
 
     @Override
-    public boolean addProduct(String title, String description) {
-        Product product = new Product();
-        product.setTitle(title);
-        product.setDescription(description);
+    public boolean addSubscriber(String firstName, String lastName, double balance) {
+        Subscriber subscriber = new Subscriber();
+        subscriber.setFirstName(firstName);
+        subscriber.setLastName(lastName);
+        subscriber.setBalance(balance);
 
-        if (alreadyExist(product)) {
+
+        if (alreadyExist(subscriber)) {
             return false;
         } else {
-            dao.addProduct(product);
+            dao.addSubscriber(subscriber);
             return true;
         }
     }
 
     @Override
-    public boolean removeProductByTitle(String title) {
-        Optional<Product> foundProduct = dao.getProductByTitle(title);
+    public boolean removeSubscriberByAccountNo(int accountNo) {
+        Optional<Subscriber> foundProduct = dao.getSubscriberByAccountNo(accountNo);
         if (foundProduct.isPresent()) {
-            Product product = foundProduct.get();
-            dao.deleteProduct(product);
+            Subscriber subscriber = foundProduct.get();
+            dao.deleteSubscriber(subscriber);
             return true;
         } else {
             return false;
@@ -42,11 +45,11 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return dao.getAllProducts();
+    public List<Subscriber> getAllSubscribers() {
+        return dao.getAllSubscribers();
     }
 
-    private boolean alreadyExist(Product product) {
-        return dao.getProductByTitle(product.getTitle()).isPresent();
+    private boolean alreadyExist(Subscriber subscriber) {
+        return dao.getSubscriberByAccountNo(subscriber.getAccountNo()).isPresent();
     }
 }

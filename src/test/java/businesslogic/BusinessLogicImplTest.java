@@ -2,7 +2,7 @@ package businesslogic;
 
 
 import database.Database;
-import domain.Product;
+import domain.Subscriber;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,18 +26,18 @@ public class BusinessLogicImplTest {
     }
 
     @Test
-    public void shouldAddNewProductIfNotExistInTheList(){
-        doReturn(Optional.empty()).when(dao).getProductByTitle("Bread");
-        boolean result = service.addProduct("Bread", "1gab");
+    public void shouldAddNewSubscriberIfNotExistInTheDB(){
+        doReturn(Optional.empty()).when(dao).getSubscriberByAccountNo("Bread");
+        boolean result = service.addSubscriber("Bread", "1gab");
         assertThat(result, is(true));
-        verify(dao).getProductByTitle("Bread");
+        verify(dao).getSubscriberByAccountNo("Bread");
     }
 
     @Test
     public void shouldNotAddNewProductIfAlreadyExistInTheList(){
-        Product product = mock(Product.class);
-        doReturn(Optional.of(product)).when(dao).getProductByTitle("Milk");
-        boolean result = service.addProduct("Milk", "1L");
+        Subscriber subscriber = mock(Subscriber.class);
+        doReturn(Optional.of(subscriber)).when(dao).getSubscriberByAccountNo("Milk");
+        boolean result = service.addSubscriber("Milk", "1L");
         assertThat(result, is(false));
     }
 }

@@ -22,14 +22,14 @@ public class RemoveProductCommand implements Command{
 
         ///////////////////BL/////////////////////////
 
-        boolean result = businessLogic.removeProductByTitle(title);
+        boolean result = businessLogic.removeSubscriberByAccountNo(title);
 
         ////////////////////BL end /////////////////
 
         if (result) {
-            System.out.println("Product with title " + title + " was found and will be removed from list!");
+            System.out.println("Subscriber with title " + title + " was found and will be removed from list!");
         } else {
-            System.out.println("Product with title " + title + " not found and not be removed from list!");
+            System.out.println("Subscriber with title " + title + " not found and not be removed from list!");
         }
 
         System.out.println("Remove product from list execution end!");
