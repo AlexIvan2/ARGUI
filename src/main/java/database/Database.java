@@ -11,5 +11,6 @@ public interface Database {
     void deleteSubscriber(Subscriber subscriber);
     List<Subscriber> getAllSubscribers();
     Optional<Subscriber> getSubscriberByAccountNo(int accountNo);
+    Optional<Subscriber> getSubscriberByPersonalID(String personalID);
 
 }

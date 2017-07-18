@@ -62,6 +62,7 @@ public class Subscriber {
         return "Subscriber{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", personalID='" + personalID + '\'' +
                 ", accountNo='" + accountNo + '\'' +
                 ", balance='" + balance + '\'' +
                 '}';

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BusinessLogic {
 
-    boolean addSubscriber(String firstName, String lastName, double balance);
+    boolean addSubscriber(String firstName, String lastName, String personalID, double balance);
 
     boolean removeSubscriberByAccountNo(int accountNo);
 

@@ -17,15 +17,17 @@ public class AddSubscriberCommand implements Command {
         System.out.println();
         System.out.println("Add subscriber to list execution start!");
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter subscribers first name:");
+        System.out.print("Enter subscriber first name:");
         String firstName = sc.nextLine();
-        System.out.print("Enter subscribers last name:");
+        System.out.print("Enter subscriber last name:");
         String lastName = sc.nextLine();
-        System.out.print("Enter subscribers initial balance:");
+        System.out.print("Enter subscriber personalID:");
+        String personalID = sc.nextLine();
+        System.out.print("Enter subscriber initial balance:");
         String balance = sc.nextLine();
 
         ///////////////////////BL/////////////////////
-        boolean result = businessLogic.addSubscriber(firstName, lastName, Double.parseDouble(balance));
+        boolean result = businessLogic.addSubscriber(firstName, lastName,  personalID, Double.parseDouble(balance));
 
         //////////////BL END//////////
         if (!result) {

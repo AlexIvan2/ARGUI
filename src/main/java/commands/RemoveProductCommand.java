@@ -15,24 +15,24 @@ public class RemoveProductCommand implements Command{
     @Override
     public void execute() {
         System.out.println();
-        System.out.println("Remove product from list execution start!");
+        System.out.println("Remove subscribers from DB!");
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter product title:");
-        final String title = sc.nextLine();
+        System.out.print("Enter account number:");
+        final String accountNo = sc.nextLine();
 
         ///////////////////BL/////////////////////////
 
-        boolean result = businessLogic.removeSubscriberByAccountNo(title);
+        boolean result = businessLogic.removeSubscriberByAccountNo(Integer.parseInt(accountNo));
 
         ////////////////////BL end /////////////////
 
         if (result) {
-            System.out.println("Subscriber with title " + title + " was found and will be removed from list!");
+            System.out.println("Subscriber with account " + accountNo + " was found and will be removed from DB!");
         } else {
-            System.out.println("Subscriber with title " + title + " not found and not be removed from list!");
+            System.out.println("Subscriber with account " + accountNo + " not found and not be removed from DB!");
         }
 
-        System.out.println("Remove product from list execution end!");
+        System.out.println("Remove customer from DB execution end!");
         System.out.println();
     }
 }

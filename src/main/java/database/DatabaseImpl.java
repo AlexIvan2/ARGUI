@@ -32,4 +32,11 @@ public class DatabaseImpl implements Database{
                 .filter(p -> p.getAccountNo() == accountNo)
                 .findFirst();
     }
+
+    @Override
+    public Optional<Subscriber> getSubscriberByPersonalID(String personalID){
+        return subscribers.stream()
+                .filter(p -> p.getPersonalID() == personalID)
+                .findFirst();
+    }
 }

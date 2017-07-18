@@ -17,11 +17,13 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public boolean addSubscriber(String firstName, String lastName, double balance) {
+    public boolean addSubscriber(String firstName, String lastName, String personalID, double balance) {
         Subscriber subscriber = new Subscriber();
         subscriber.setFirstName(firstName);
         subscriber.setLastName(lastName);
+        subscriber.setPersonalID(personalID);
         subscriber.setBalance(balance);
+
 
 
         if (alreadyExist(subscriber)) {
@@ -50,6 +52,6 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     private boolean alreadyExist(Subscriber subscriber) {
-        return dao.getSubscriberByAccountNo(subscriber.getAccountNo()).isPresent();
+        return dao.getSubscriberByPersonalID(subscriber.getPersonalID()).isPresent();
     }
 }
