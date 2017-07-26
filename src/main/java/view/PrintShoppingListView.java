@@ -1,14 +1,14 @@
-package commands;
+package view;
 
 
 import businesslogic.BusinessLogic;
 import domain.Subscriber;
 
-public class PrintShoppingListCommand implements Command {
+public class PrintShoppingListView implements View {
 
     private BusinessLogic businessLogic;
 
-    public PrintShoppingListCommand(BusinessLogic businessLogic) {
+    public PrintShoppingListView(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 

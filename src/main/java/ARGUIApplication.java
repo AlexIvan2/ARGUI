@@ -1,10 +1,10 @@
 
 import businesslogic.BusinessLogic;
 import businesslogic.BusinessLogicImpl;
-import commands.AddSubscriberCommand;
-import commands.Command;
-import commands.PrintShoppingListCommand;
-import commands.RemoveProductCommand;
+import view.AddSubscriberView;
+import view.View;
+import view.PrintShoppingListView;
+import view.RemoveProductView;
 import database.Database;
 import database.DatabaseImpl;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ShoppingListApplication {
+public class ARGUIApplication {
 
     public static void main(String[] args) {
         // Use cases:
@@ -23,10 +23,10 @@ public class ShoppingListApplication {
         Database database = new DatabaseImpl();
         BusinessLogic businessLogic = new BusinessLogicImpl(database);
 
-        Map<Integer, Command> commands = new HashMap<>();
-        commands.put(1, new AddSubscriberCommand(businessLogic));
-        commands.put(2, new RemoveProductCommand(businessLogic));
-        commands.put(3, new PrintShoppingListCommand(businessLogic));
+        Map<Integer, View> commands = new HashMap<>();
+        commands.put(1, new AddSubscriberView(businessLogic));
+        commands.put(2, new RemoveProductView(businessLogic));
+        commands.put(3, new PrintShoppingListView(businessLogic));
 
         while (true) {
             printProgramMenu();
@@ -34,8 +34,8 @@ public class ShoppingListApplication {
             if (menuItem == 4) {
                 break;
             } else {
-                Command command = commands.get(menuItem);
-                command.execute();
+                View view = commands.get(menuItem);
+                view.execute();
             }
         }
 

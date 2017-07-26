@@ -1,14 +1,14 @@
-package commands;
+package view;
 
 import businesslogic.BusinessLogic;
 
 import java.util.Scanner;
 
-public class AddSubscriberCommand implements Command {
+public class AddSubscriberView implements View {
 
     private BusinessLogic businessLogic;
 
-    public AddSubscriberCommand(BusinessLogic businessLogic){
+    public AddSubscriberView(BusinessLogic businessLogic){
         this.businessLogic = businessLogic;
     }
 

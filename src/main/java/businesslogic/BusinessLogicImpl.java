@@ -4,42 +4,48 @@ package businesslogic;
 import database.Database;
 import domain.Subscriber;
 
+import java.security.Provider;
 import java.util.List;
 import java.util.Optional;
 
+import static domain.SubscriberBuilder.createSubscriber;
+
 public class BusinessLogicImpl implements BusinessLogic {
 
-    private Database dao;
+    private Database database;
+    private AddSubscriberValidator addSubscriberValidator;
 
-
-    public BusinessLogicImpl(Database dao){
-        this.dao = dao;
+    public BusinessLogicImpl(Database database,
+                             AddSubscriberValidator addSubscriberValidator){
+        this.database = database;
+        this.addSubscriberValidator = addSubscriberValidator;
     }
 
     @Override
-    public boolean addSubscriber(String firstName, String lastName, String personalID, double balance) {
-        Subscriber subscriber = new Subscriber();
-        subscriber.setFirstName(firstName);
-        subscriber.setLastName(lastName);
-        subscriber.setPersonalID(personalID);
-        subscriber.setBalance(balance);
-
-
-
-        if (alreadyExist(subscriber)) {
-            return false;
-        } else {
-            dao.addSubscriber(subscriber);
-            return true;
+    public Response addSubscriber(String firstName, String lastName, String personalID, Double balance) {
+        List<Error> validationErrors = addSubscriberValidator.validate(firstName, lastName, personalID, balance);
+        if(!validationErrors.isEmpty()){
+            return Response.createFailResponse(validationErrors);
         }
+
+        Subscriber subscriber = createSubscriber()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withPersonalID(personalID)
+                .withBalance(balance).build();
+
+        database.addSubscriber(subscriber);
+
+        return Response.createSuccessResponse();
+
     }
 
     @Override
     public boolean removeSubscriberByAccountNo(int accountNo) {
-        Optional<Subscriber> foundProduct = dao.getSubscriberByAccountNo(accountNo);
+        Optional<Subscriber> foundProduct = database.getSubscriberByAccountNo(accountNo);
         if (foundProduct.isPresent()) {
             Subscriber subscriber = foundProduct.get();
-            dao.deleteSubscriber(subscriber);
+            database.deleteSubscriber(subscriber);
             return true;
         } else {
             return false;
@@ -48,10 +54,10 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public List<Subscriber> getAllSubscribers() {
-        return dao.getAllSubscribers();
+        return database.getAllSubscribers();
     }
 
     private boolean alreadyExist(Subscriber subscriber) {
-        return dao.getSubscriberByPersonalID(subscriber.getPersonalID()).isPresent();
+        return database.getSubscriberByPersonalID(subscriber.getPersonalID()).isPresent();
     }
 }
