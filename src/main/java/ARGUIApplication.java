@@ -1,6 +1,8 @@
 
+import businesslogic.AddSubscriberValidator;
 import businesslogic.BusinessLogic;
 import businesslogic.BusinessLogicImpl;
+import businesslogic.Response;
 import view.AddSubscriberView;
 import view.View;
 import view.PrintShoppingListView;
@@ -21,7 +23,8 @@ public class ARGUIApplication {
         // 3. Print all subscribers to console
         // 4. Exit
         Database database = new DatabaseImpl();
-        BusinessLogic businessLogic = new BusinessLogicImpl(database);
+        AddSubscriberValidator addSubscriberValidator = new AddSubscriberValidator(database);
+        BusinessLogic businessLogic = new BusinessLogicImpl(database, addSubscriberValidator);
 
         Map<Integer, View> commands = new HashMap<>();
         commands.put(1, new AddSubscriberView(businessLogic));

@@ -1,6 +1,7 @@
 package view;
 
 import businesslogic.BusinessLogic;
+import businesslogic.Response;
 
 import java.util.Scanner;
 
@@ -27,10 +28,10 @@ public class AddSubscriberView implements View {
         String balance = sc.nextLine();
 
         ///////////////////////BL/////////////////////
-        boolean result = businessLogic.addSubscriber(firstName, lastName,  personalID, Double.parseDouble(balance));
+        Response response = businessLogic.addSubscriber(firstName, lastName,  personalID, Double.parseDouble(balance));
 
         //////////////BL END//////////
-        if (!result) {
+        if (response.isFail()) {
             System.out.println("Can not add Subscriber with such account number " +
                     "Already exist in the DB");
         }

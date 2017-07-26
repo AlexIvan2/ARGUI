@@ -2,12 +2,13 @@ package businesslogic;
 
 
 import database.Database;
-import domain.Subscriber;
 import org.junit.Before;
 import org.junit.Test;
+import domain.Subscriber;
 
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doReturn;
@@ -16,27 +17,29 @@ import static org.mockito.Mockito.verify;
 
 public class BusinessLogicImplTest {
 
-    private Database dao;
+    private Database database;
     private BusinessLogic service;
+    private AddSubscriberValidator addSubscriberValidator;
 
     @Before
     public void init(){
-        dao = mock(Database.class);
-        service = new BusinessLogicImpl(dao);
+        database = mock(Database.class);
+        addSubscriberValidator = mock(AddSubscriberValidator.class);
+        service = new BusinessLogicImpl(database, addSubscriberValidator);
     }
     //Where this test is using BusinessLogicImpl alreadyExist method?
     @Test
     public void shouldAddNewSubscriberIfNotExistInTheDB(){
-        doReturn(Optional.empty()).when(dao).getSubscriberByPersonalID("290890-11602");
-        boolean result = service.addSubscriber("Alex", "Ivanov", "290890-11602", 0);
-        assertThat(result, is(true));
-        verify(dao).getSubscriberByPersonalID("290890-11602");
+        doReturn(Optional.empty()).when(database).getSubscriberByPersonalID("290890-11602");
+        Response result = service.addSubscriber("Alex", "Ivanov", "290890-11602", 0.0);
+        assertThat(result.isSuccess(), is(true));
+        verify(database).addSubscriber(any(Subscriber.class));
     }
 
 //    @Test
 //    public void shouldNotAddNewProductIfAlreadyExistInTheList(){
 //        Subscriber subscriber = mock(Subscriber.class);
-//        doReturn(Optional.of(subscriber)).when(dao).getSubscriberByAccountNo("Milk");
+//        doReturn(Optional.of(subscriber)).when(database).getSubscriberByAccountNo("Milk");
 //        boolean result = service.addSubscriber("Milk", "1L");
 //        assertThat(result, is(false));
 //    }
