@@ -6,8 +6,8 @@ public class SubscriberBuilder {
     private String firstName;
     private String lastName;
     private String personalID;
-    private int accountNo;
-    private double balance;
+    private Long accountNo;
+    private Double balance;
 
     private SubscriberBuilder(){}
 
@@ -27,11 +27,17 @@ public class SubscriberBuilder {
 
     public Subscriber build(){
         Subscriber subscriber = new Subscriber();
+        subscriber.setAccountNo(accountNo);
         subscriber.setFirstName(firstName);
         subscriber.setLastName(lastName);
         subscriber.setPersonalID(personalID);
         subscriber.setBalance(balance);
         return subscriber;
+    }
+
+    public SubscriberBuilder withAccountNo(Long accountNo){
+        this.accountNo = accountNo;
+        return this;
     }
 
     public SubscriberBuilder withFirstName(String firstName){

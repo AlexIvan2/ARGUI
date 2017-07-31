@@ -1,21 +1,12 @@
 package domain;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Subscriber {
 
     private String firstName;
     private String lastName;
     private String personalID;
-    private int accountNo;
-    private double balance;
-
-    private static final AtomicInteger count = new AtomicInteger(0);
-
-    public Subscriber() {
-        this.accountNo = count.incrementAndGet();
-
-    }
+    private Long accountNo;
+    private Double balance;
 
     public String getFirstName() {
         return firstName;
@@ -33,19 +24,19 @@ public class Subscriber {
         this.lastName = lastName;
     }
 
-    public int getAccountNo() {
+    public Long getAccountNo() {
         return accountNo;
     }
 
-    public void setAccountNo(int accountNo) {
+    public void setAccountNo(Long accountNo) {
         this.accountNo = accountNo;
     }
 
-    public double getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
     }
 
