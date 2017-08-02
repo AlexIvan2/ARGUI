@@ -20,7 +20,7 @@ public class PrintSubscribersListView implements View {
         System.out.println();
         System.out.println("Print subscribers list to console execution start!");
         for (Subscriber subscriber : businessLogic.getAllSubscribers()) {
-            System.out.println(subscriber.getFirstName() + subscriber.getLastName() + subscriber.getPersonalID() + subscriber.getBalance());
+            System.out.println(subscriber.getAccountNo() + " | " + subscriber.getFirstName() + " | " + subscriber.getLastName() + " | " + subscriber.getPersonalID() + " | " + subscriber.getBalance());
         }
         System.out.println("Print shopping list to console execution end!");
         System.out.println();

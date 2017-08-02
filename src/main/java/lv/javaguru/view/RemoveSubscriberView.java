@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 @Component
-public class RemoveProductView implements View {
+public class RemoveSubscriberView implements View {
 
     private BusinessLogic businessLogic;
     @Autowired
-    public RemoveProductView(BusinessLogic businessLogic) {
+    public RemoveSubscriberView(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 

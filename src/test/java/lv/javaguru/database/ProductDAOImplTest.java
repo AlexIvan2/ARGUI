@@ -1,25 +1,29 @@
 package lv.javaguru.database;
 
-import lv.javaguru.database.jdbc.SubscriberDAOImpl;
+import lv.javaguru.config.SpringAppConfig;
 import lv.javaguru.domain.Subscriber;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Optional;
 
 import static lv.javaguru.domain.SubscriberBuilder.createSubscriber;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class ProductDAOImplTest {
 
     private DatabaseUtil databaseUtil = new DatabaseUtil();
-    private SubscriberDAO subscriberDAO = new SubscriberDAOImpl();
+    private SubscriberDAO subscriberDAO;
 
     @Before
     public void init() {
         databaseUtil.cleanDatabase();
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
+        subscriberDAO = applicationContext.getBean(SubscriberDAO.class);
     }
 
     @Test

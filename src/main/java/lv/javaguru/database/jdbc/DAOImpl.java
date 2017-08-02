@@ -1,6 +1,7 @@
 package lv.javaguru.database.jdbc;
 
 import lv.javaguru.database.DBException;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,10 +13,14 @@ public class DAOImpl {
 
     private static final String DB_CONFIG_FILE = "database.properties";
 
-    protected String jdbcUrl = null;
-    protected String driverClass = null;
-    protected String userName = null;
-    protected String password = null;
+    @Value( "${jdbcUrl}" )
+    protected String jdbcUrl;
+    @Value( "${driverClass}" )
+    protected String driverClass;
+    @Value( "${userName}" )
+    protected String userName;
+    @Value( "${password}" )
+    protected String password;
 
     public DAOImpl(){
         initDatabaseConnectionProperties();
