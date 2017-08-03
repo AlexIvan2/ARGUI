@@ -1,6 +1,6 @@
 package lv.javaguru.view;
 
-import lv.javaguru.businesslogic.BusinessLogic;
+import lv.javaguru.businesslogic.RemoveSubscriberByAccountNoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,11 +8,7 @@ import java.util.Scanner;
 @Component
 public class RemoveSubscriberView implements View {
 
-    private BusinessLogic businessLogic;
-    @Autowired
-    public RemoveSubscriberView(BusinessLogic businessLogic) {
-        this.businessLogic = businessLogic;
-    }
+    @Autowired private RemoveSubscriberByAccountNoService service;
 
     @Override
     public void execute() {
@@ -24,7 +20,7 @@ public class RemoveSubscriberView implements View {
 
         ///////////////////BL/////////////////////////
 
-        boolean result = businessLogic.removeSubscriberByAccountNo(Long.parseLong(accountNo));
+        boolean result = service.removeSubscriberByAccountNo(Long.parseLong(accountNo));
 
         ////////////////////BL end /////////////////
 

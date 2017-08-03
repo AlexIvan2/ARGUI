@@ -1,4 +1,4 @@
-package lv.javaguru.businesslogic;
+package lv.javaguru.businesslogic.api;
 
 import java.util.List;
 

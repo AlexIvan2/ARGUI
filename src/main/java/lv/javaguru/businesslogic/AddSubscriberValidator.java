@@ -2,6 +2,7 @@ package lv.javaguru.businesslogic;
 
 
 import com.google.common.collect.Lists;
+import lv.javaguru.businesslogic.api.Error;
 import lv.javaguru.database.SubscriberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +28,7 @@ public class AddSubscriberValidator {
         return subscriberDAO.getByPersonalId(personalId).isPresent();
     }
 
-    public List<Error> validate(String firstName, String lastName, String personalID, Double balance){
+    public List<lv.javaguru.businesslogic.api.Error> validate(String firstName, String lastName, String personalID, Double balance){
         List<Error> errors = Lists.newArrayList();
         validateFirstName(firstName).ifPresent(e -> errors.add(e));
         validateLastName(lastName).ifPresent(e -> errors.add(e));

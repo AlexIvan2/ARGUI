@@ -1,7 +1,7 @@
 package lv.javaguru.view;
 
-import lv.javaguru.businesslogic.BusinessLogic;
-import lv.javaguru.businesslogic.Response;
+import lv.javaguru.businesslogic.AddSubscriberService;
+import lv.javaguru.businesslogic.api.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,12 +9,7 @@ import java.util.Scanner;
 @Component
 public class AddSubscriberView implements View {
 
-    private BusinessLogic businessLogic;
-
-    @Autowired
-    public AddSubscriberView(BusinessLogic businessLogic){
-        this.businessLogic = businessLogic;
-    }
+    @Autowired private AddSubscriberService addSubscriberService;
 
     @Override
     public void execute(){
@@ -31,7 +26,7 @@ public class AddSubscriberView implements View {
         String balance = sc.nextLine();
 
         ///////////////////////BL/////////////////////
-        Response response = businessLogic.addSubscriber(firstName, lastName,  personalID, Double.parseDouble(balance));
+        Response response = addSubscriberService.addSubscriber(firstName, lastName, personalID, Double.parseDouble(balance));
 
         //////////////BL END//////////
         if (response.isFail()) {

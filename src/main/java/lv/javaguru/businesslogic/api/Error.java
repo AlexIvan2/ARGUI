@@ -1,4 +1,4 @@
-package lv.javaguru.businesslogic;
+package lv.javaguru.businesslogic.api;
 
 public class Error {
 
