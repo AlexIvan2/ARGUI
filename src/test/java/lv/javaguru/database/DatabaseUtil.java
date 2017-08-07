@@ -1,30 +1,25 @@
 package lv.javaguru.database;
 
-import lv.javaguru.database.jdbc.DAOImpl;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseUtil extends DAOImpl {
+@Component
+public class DatabaseUtil {
+
+    private JdbcTemplate jdbcTemplate;
+
+    public DatabaseUtil(DataSource dataSource){
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
     public void cleanDatabase() throws DBException {
-        for(String tableName : getTableNames()) {
-            Connection connection = getConnection();
-            try {
-                connection = getConnection();
-                String sql = "delete from " + tableName;
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.executeUpdate();
-            } catch (Throwable e) {
-                System.out.println("Exception while execute cleanDatabase() for table " + tableName);
-                e.printStackTrace();
-                throw new DBException(e);
-            } finally {
-                closeConnection(connection);
-            }
-        }
+
+        this.jdbcTemplate.update(
+                "delete from subscribers");
     }
 
     private List<String> getTableNames() {

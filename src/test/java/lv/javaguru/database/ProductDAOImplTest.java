@@ -16,14 +16,15 @@ import static org.junit.Assert.assertThat;
 
 public class ProductDAOImplTest {
 
-    private DatabaseUtil databaseUtil = new DatabaseUtil();
+    private DatabaseUtil databaseUtil;
     private SubscriberDAO subscriberDAO;
 
     @Before
     public void init() {
-        databaseUtil.cleanDatabase();
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
         subscriberDAO = applicationContext.getBean(SubscriberDAO.class);
+        databaseUtil = applicationContext.getBean(DatabaseUtil.class);
+        databaseUtil.cleanDatabase();
     }
 
     @Test
@@ -40,7 +41,7 @@ public class ProductDAOImplTest {
 
         Optional<Subscriber> subscriberFromDB = subscriberDAO.getByAccountNo(subscriber.getAccountNo());
 
-        assertThat(subscriberFromDB.isPresent(), is(true));
+
         assertEquals(subscriber.getAccountNo(), subscriberFromDB.get().getAccountNo());
         assertEquals(subscriber.getFirstName(), subscriberFromDB.get().getFirstName());
         assertEquals(subscriber.getLastName(), subscriberFromDB.get().getLastName());
