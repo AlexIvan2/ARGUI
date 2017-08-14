@@ -4,8 +4,14 @@ import lv.javaguru.config.SpringAppConfig;
 import lv.javaguru.domain.Subscriber;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 
@@ -14,16 +20,16 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = SpringAppConfig.class)
+@Transactional
 public class ProductDAOImplTest {
 
-    private DatabaseUtil databaseUtil;
-    private SubscriberDAO subscriberDAO;
+    @Autowired private DatabaseUtil databaseUtil;
+    @Autowired private SubscriberDAO subscriberDAO;
 
     @Before
     public void init() {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
-        subscriberDAO = applicationContext.getBean(SubscriberDAO.class);
-        databaseUtil = applicationContext.getBean(DatabaseUtil.class);
         databaseUtil.cleanDatabase();
     }
 

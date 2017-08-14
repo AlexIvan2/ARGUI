@@ -5,6 +5,7 @@ import lv.javaguru.domain.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 public interface RemoveSubscriberByAccountNoService {
@@ -19,6 +20,7 @@ class RemoveSubscriberByAccountNoServiceImpl implements RemoveSubscriberByAccoun
     private SubscriberDAO dao;
 
     @Override
+    @Transactional
     public boolean removeSubscriberByAccountNo(Long accountNo) {
         Optional<Subscriber> foundProduct = dao.getByAccountNo(accountNo);
         if (foundProduct.isPresent()) {

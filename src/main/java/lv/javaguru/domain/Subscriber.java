@@ -1,15 +1,29 @@
 package lv.javaguru.domain;
 
+
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="products")
 public class Subscriber {
 
+    @Id
+    @Column(name="account_no")
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long accountNo;
-    private String firstName;
-    private String lastName;
-    private String personalID;
-    private Double balance;
 
-    public Subscriber() {
-    }
+    @Column(name="first_name", nullable = false)
+    private String firstName;
+
+    @Column(name="last_name", nullable = false)
+    private String lastName;
+
+    @Column(name="personal_id", nullable = false)
+    private String personalID;
+
+    @Column(name = "balance", nullable = false)
+    private Double balance;
 
     public String getFirstName() {
         return firstName;

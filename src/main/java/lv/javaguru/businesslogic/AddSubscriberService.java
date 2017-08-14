@@ -1,11 +1,13 @@
 package lv.javaguru.businesslogic;
 
 import lv.javaguru.businesslogic.api.*;
+import lv.javaguru.businesslogic.api.Error;
 import lv.javaguru.database.SubscriberDAO;
 import lv.javaguru.domain.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static lv.javaguru.domain.SubscriberBuilder.createSubscriber;
@@ -23,8 +25,9 @@ class AddSubscriberServiceImpl implements AddSubscriberService {
     @Autowired private AddSubscriberValidator addSubscriberValidator;
 
     @Override
+    @Transactional
     public Response addSubscriber(String firstName, String lastName, String personalID, Double balance) {
-        List<lv.javaguru.businesslogic.api.Error> validationErrors = addSubscriberValidator.validate(firstName, lastName, personalID, balance);
+        List<Error> validationErrors = addSubscriberValidator.validate(firstName, lastName, personalID, balance);
         if(!validationErrors.isEmpty()){
             return Response.createFailResponse(validationErrors);
         }
