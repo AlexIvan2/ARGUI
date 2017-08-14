@@ -29,23 +29,40 @@ public class ProductDAOImplTest {
 
     @Test
     public void testCreate() throws Exception {
-        Subscriber subscriber = createSubscriber()
-                .withFirstName("TestFirstName")
-                .withLastName("TestLastName")
-                .withPersonalID("290890-11602")
-                .withBalance(10.5).build();
-
-        assertThat(subscriber.getAccountNo(), is(nullValue()));
-        subscriber = subscriberDAO.save(subscriber);
+        Subscriber subscriber = create("Alex1", "Ivan1", "298090-11601", 101.0);
         assertThat(subscriber.getAccountNo(), is(notNullValue()));
 
         Optional<Subscriber> subscriberFromDB = subscriberDAO.getByAccountNo(subscriber.getAccountNo());
 
-
+        assertThat(subscriberFromDB.isPresent(), is(true));
         assertEquals(subscriber.getAccountNo(), subscriberFromDB.get().getAccountNo());
         assertEquals(subscriber.getFirstName(), subscriberFromDB.get().getFirstName());
         assertEquals(subscriber.getLastName(), subscriberFromDB.get().getLastName());
         assertEquals(subscriber.getPersonalID(), subscriberFromDB.get().getPersonalID());
         assertEquals(subscriber.getBalance(), subscriberFromDB.get().getBalance());
+    }
+
+    @Test
+    public void testGetByFirstName() {
+        Subscriber subscriber = create("Alex2", "Ivan2", "298090-11602", 102.0);
+
+        Optional<Subscriber> subscriberFromDB = subscriberDAO.getByFirstName(subscriber.getFirstName());
+
+        assertThat(subscriberFromDB.isPresent(), is(true));
+        assertEquals(subscriber.getAccountNo(), subscriberFromDB.get().getAccountNo());
+        assertEquals(subscriber.getFirstName(), subscriberFromDB.get().getFirstName());
+        assertEquals(subscriber.getLastName(), subscriberFromDB.get().getLastName());
+        assertEquals(subscriber.getPersonalID(), subscriberFromDB.get().getPersonalID());
+        assertEquals(subscriber.getBalance(), subscriberFromDB.get().getBalance());
+    }
+
+
+    private Subscriber create(String firstName, String lastName, String personalID, Double balance) {
+        Subscriber subscriber = createSubscriber()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withPersonalID(personalID)
+                .withBalance(balance).build();
+        return subscriberDAO.save(subscriber);
     }
 }

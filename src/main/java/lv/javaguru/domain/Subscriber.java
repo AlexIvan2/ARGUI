@@ -2,11 +2,14 @@ package lv.javaguru.domain;
 
 public class Subscriber {
 
+    private Long accountNo;
     private String firstName;
     private String lastName;
     private String personalID;
-    private Long accountNo;
     private Double balance;
+
+    public Subscriber() {
+    }
 
     public String getFirstName() {
         return firstName;

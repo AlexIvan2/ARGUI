@@ -1,6 +1,5 @@
 package lv.javaguru.database.jdbc;
 
-import lv.javaguru.database.DBException;
 import lv.javaguru.database.SubscriberDAO;
 import lv.javaguru.domain.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
-    public Subscriber save(Subscriber subscriber) throws DBException {
+    public Subscriber save(Subscriber subscriber) {
         SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("subscribers")
                 .usingColumns("first_name", "last_name", "personal_id", "balance")
@@ -83,7 +82,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
-    public Optional<Subscriber> getByAccountNo(Long accountNo) throws DBException {
+    public Optional<Subscriber> getByAccountNo(Long accountNo) {
         List<Subscriber> subscribers = this.jdbcTemplate.query(
                 "select * from SUBSCRIBERS where account_no = ?",
                 new Object[]{accountNo},
@@ -100,9 +99,9 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
-    public Optional<Subscriber> getByFirstName(String firstName) throws DBException {
+    public Optional<Subscriber> getByFirstName(String firstName) {
         Subscriber subscriber = this.jdbcTemplate.queryForObject(
-                "select * from SUBSCRIBERS where fist_name = ?",
+                "select * from SUBSCRIBERS where first_name = ?",
                 new Object[]{firstName},
                 rowMapper());
         return Optional.ofNullable(subscriber);
@@ -110,7 +109,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
-    public Optional<Subscriber> getByPersonalId(String personalId) throws DBException {
+    public Optional<Subscriber> getByPersonalId(String personalId) {
         Subscriber subscriber = this.jdbcTemplate.queryForObject(
                 "select * from SUBSCRIBERS where personal_id = ?",
                 new Object[]{personalId},
@@ -121,7 +120,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
 
 
     @Override
-    public List<Subscriber> getAll() throws DBException {
+    public List<Subscriber> getAll() {
         List<Subscriber> subscriber = this.jdbcTemplate.query(
                 "select * from SUBSCRIBERS",
                 rowMapper());
@@ -129,7 +128,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
-    public void delete(Subscriber subscriber) throws DBException {
+    public void delete(Subscriber subscriber) {
         this.jdbcTemplate.update(
                 "delete from subscribers where account_no = ?",
                 subscriber.getAccountNo());

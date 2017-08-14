@@ -16,7 +16,7 @@ public class DatabaseUtil {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void cleanDatabase() throws DBException {
+    public void cleanDatabase() {
 
         this.jdbcTemplate.update(
                 "delete from subscribers");
