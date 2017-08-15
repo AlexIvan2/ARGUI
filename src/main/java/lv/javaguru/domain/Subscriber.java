@@ -2,10 +2,15 @@ package lv.javaguru.domain;
 
 
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="products")
+@Table(name="subscribers")
 public class Subscriber {
 
     @Id
@@ -22,7 +27,7 @@ public class Subscriber {
     @Column(name="personal_id", nullable = false)
     private String personalID;
 
-    @Column(name = "balance", nullable = false)
+    @Column(name = "balance")
     private Double balance;
 
     public String getFirstName() {

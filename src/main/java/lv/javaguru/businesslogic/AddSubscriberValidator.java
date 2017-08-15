@@ -13,22 +13,23 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
+public interface AddSubscriberValidator {
+    List<Error> validate(String firstName, String lastName, String personalID, Double balance);
+}
+
 @Component
-public class AddSubscriberValidator {
+class AddSubscriberValidatorImpl implements AddSubscriberValidator {
 
     //private Database lv.javaguru.database;
-    private SubscriberDAO subscriberDAO;
-
     @Autowired
-    public AddSubscriberValidator(SubscriberDAO subscriberDAO){
-        this.subscriberDAO = subscriberDAO;
-    }
+    private SubscriberDAO subscriberDAO;
 
     private boolean alreadyExist(String personalId) {
         return subscriberDAO.getByPersonalId(personalId).isPresent();
     }
 
-    public List<lv.javaguru.businesslogic.api.Error> validate(String firstName, String lastName, String personalID, Double balance){
+    @Override
+    public List<Error> validate(String firstName, String lastName, String personalID, Double balance){
         List<Error> errors = Lists.newArrayList();
         validateFirstName(firstName).ifPresent(e -> errors.add(e));
         validateLastName(lastName).ifPresent(e -> errors.add(e));
