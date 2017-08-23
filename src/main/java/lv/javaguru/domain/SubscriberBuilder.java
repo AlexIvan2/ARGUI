@@ -18,10 +18,10 @@ public class SubscriberBuilder {
     public static Subscriber createSubscriber(String firstName, String lastName,
                                               String personalID, Double balance){
         return createSubscriber()
-                .withFirstName("Alex")
-                .withLastName("Ivanov")
-                .withPersonalID("290890-11602")
-                .withBalance(100.0).build();
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withPersonalID(personalID)
+                .withBalance(balance).build();
 
     }
 

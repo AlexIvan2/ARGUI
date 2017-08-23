@@ -26,7 +26,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     @Override
     public Optional<Subscriber> getByAccountNo(Long account_no){
         Subscriber subscriber = (Subscriber) session().createCriteria(Subscriber.class)
-                .add(Restrictions.eq("account_no", account_no))
+                .add(Restrictions.eq("accountNo", account_no))
                 .uniqueResult();
         return Optional.ofNullable(subscriber);
     }
@@ -34,7 +34,7 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     @Override
     public Optional<Subscriber> getByFirstName(String first_name){
         Subscriber subscriber = (Subscriber) session().createCriteria(Subscriber.class)
-                .add(Restrictions.eq("first_name", first_name))
+                .add(Restrictions.eq("firstName", first_name))
                 .uniqueResult();
         return Optional.ofNullable(subscriber);
     }

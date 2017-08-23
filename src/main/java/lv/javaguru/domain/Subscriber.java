@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="subscribers")
-public class Subscriber {
+public class Subscriber extends BaseEntity {
 
     @Id
     @Column(name="account_no")
