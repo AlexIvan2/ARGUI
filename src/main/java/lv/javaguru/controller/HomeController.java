@@ -13,7 +13,7 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String home() {
-        return "test";
+        return "subscribersViewForm";
     }
 
 }

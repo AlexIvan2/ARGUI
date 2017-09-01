@@ -7,9 +7,7 @@
     <groupId>AR</groupId>
     <artifactId>ARGUI</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <repositories>
         <repository>
@@ -115,6 +113,18 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
     </dependencies>
