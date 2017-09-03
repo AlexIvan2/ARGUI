@@ -17,5 +17,7 @@ public interface SubscriberDAO {
 
     void delete(Subscriber subscriber);
 
+    void update(Subscriber subscriber);
+
     List getAll();
 }

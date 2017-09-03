@@ -22,9 +22,9 @@ class RemoveSubscriberByAccountNoServiceImpl implements RemoveSubscriberByAccoun
     @Override
     @Transactional
     public boolean removeSubscriberByAccountNo(Long accountNo) {
-        Optional<Subscriber> foundProduct = dao.getByAccountNo(accountNo);
-        if (foundProduct.isPresent()) {
-            Subscriber subscriber = foundProduct.get();
+        Optional<Subscriber> foundSubscriber = dao.getByAccountNo(accountNo);
+        if (foundSubscriber.isPresent()) {
+            Subscriber subscriber = foundSubscriber.get();
             dao.delete(subscriber);
             return true;
         } else {

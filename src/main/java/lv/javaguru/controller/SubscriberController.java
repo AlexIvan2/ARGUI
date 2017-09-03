@@ -1,14 +1,18 @@
 package lv.javaguru.controller;
 
 
-import lv.javaguru.businesslogic.GetAllSubscribersService;
+import lv.javaguru.businesslogic.AddSubscriberService;
+import lv.javaguru.businesslogic.GetSubscriberService;
+import lv.javaguru.businesslogic.RemoveSubscriberByAccountNoService;
 import lv.javaguru.domain.Subscriber;
+import lv.javaguru.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -17,14 +21,20 @@ import java.util.List;
 public class SubscriberController {
 
     @Autowired
-    GetAllSubscribersService getAllSubscribersService;
+    GetSubscriberService getSubscriberService;
+
+    @Autowired
+    AddSubscriberService addSubscriberService;
+
+    @Autowired
+    RemoveSubscriberByAccountNoService removeSubscriberByAccountNoService;
 
 
-    //-------------------Retrieve All Users--------------------------------------------------------
+    //-------------------Retrieve All Subscribers--------------------------------------------------------
 
     @RequestMapping(value = "/subscribers/", method = RequestMethod.GET)
     public ResponseEntity<List<Subscriber>> listAllUsers() {
-        List<Subscriber> subscribers = getAllSubscribersService.getAllSubscribers();
+        List<Subscriber> subscribers = getSubscriberService.getAllSubscribers();
         if(subscribers.isEmpty()){
             return new ResponseEntity<List<Subscriber>>(HttpStatus.NO_CONTENT);
         }
@@ -32,91 +42,75 @@ public class SubscriberController {
     }
 
 
-//
-//    //-------------------Retrieve Single User--------------------------------------------------------
-//
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<User> getUser(@PathVariable("id") long id) {
-//        System.out.println("Fetching User with id " + id);
-//        User user = userService.findById(id);
-//        if (user == null) {
-//            System.out.println("User with id " + id + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<User>(user, HttpStatus.OK);
-//    }
-//
-//
-//
-//    //-------------------Create a User--------------------------------------------------------
-//
-//    @RequestMapping(value = "/user/", method = RequestMethod.POST)
-//    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-//        System.out.println("Creating User " + user.getUsername());
-//
-//        if (userService.isUserExist(user)) {
-//            System.out.println("A User with name " + user.getUsername() + " already exist");
-//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//        }
-//
-//        userService.saveUser(user);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
-//        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-//    }
-//
-//
-//
-//    //------------------- Update a User --------------------------------------------------------
-//
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-//        System.out.println("Updating User " + id);
-//
-//        User currentUser = userService.findById(id);
-//
-//        if (currentUser==null) {
-//            System.out.println("User with id " + id + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        currentUser.setUsername(user.getUsername());
-//        currentUser.setAddress(user.getAddress());
-//        currentUser.setEmail(user.getEmail());
-//
-//        userService.updateUser(currentUser);
-//        return new ResponseEntity<User>(currentUser, HttpStatus.OK);
-//    }
-//
-//
-//
-//    //------------------- Delete a User --------------------------------------------------------
-//
-//    @RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
-//        System.out.println("Fetching & Deleting User with id " + id);
-//
-//        User user = userService.findById(id);
-//        if (user == null) {
-//            System.out.println("Unable to delete. User with id " + id + " not found");
-//            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-//        }
-//
-//        userService.deleteUserById(id);
-//        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-//    }
-//
-//
-//
-//    //------------------- Delete All Users --------------------------------------------------------
-//
-//    @RequestMapping(value = "/user/", method = RequestMethod.DELETE)
-//    public ResponseEntity<User> deleteAllUsers() {
-//        System.out.println("Deleting All Users");
-//
-//        userService.deleteAllUsers();
-//        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
-//    }
+
+    //-------------------Retrieve Single Subscriber--------------------------------------------------------
+
+    @RequestMapping(value = "/subscribers/{accountNo}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Subscriber> getSubscriber(@PathVariable("accountNo") long accountNo) {
+        System.out.println("Fetching Subscriber with account number " + accountNo);
+        Subscriber subscriber = getSubscriberService.getSubscriberByAccountNo(accountNo).get();
+        if (subscriber == null) {
+            System.out.println("Subscriber with account no " + accountNo + " not found");
+            return new ResponseEntity<Subscriber>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Subscriber>(subscriber, HttpStatus.OK);
+    }
+
+
+
+    //-------------------Create a Subscriber--------------------------------------------------------
+
+    @RequestMapping(value = "/subscribers/", method = RequestMethod.POST)
+    public ResponseEntity<Void> createSubscriber(@RequestBody Subscriber subscriber, UriComponentsBuilder ucBuilder) {
+        System.out.println("Creating Subscriber " + subscriber);
+
+        addSubscriberService.addSubscriber(subscriber.getFirstName(), subscriber.getLastName(), subscriber.getPersonalID(), subscriber.getBalance());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/subscribers/{accountNo}").buildAndExpand(subscriber.getAccountNo()).toUri());
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    }
+
+
+    //------------------- Update a Subscriber --------------------------------------------------------
+
+    @RequestMapping(value = "/subscribers/update", method = RequestMethod.PUT)
+    public ResponseEntity<Subscriber> updateUser(@RequestBody Subscriber subscriber) {
+        System.out.println("Updating Subscriber " + subscriber.getAccountNo());
+
+        Subscriber currentSubscriber = getSubscriberService.getSubscriberByAccountNo(subscriber.getAccountNo()).get();
+
+        if (currentSubscriber == null) {
+            System.out.println("Subscriber with account number " + subscriber.getAccountNo() + " not found");
+            return new ResponseEntity<Subscriber>(HttpStatus.NOT_FOUND);
+        }
+
+        currentSubscriber.setFirstName(subscriber.getFirstName());
+        currentSubscriber.setLastName(subscriber.getLastName());
+        currentSubscriber.setPersonalID(subscriber.getPersonalID());
+        currentSubscriber.setBalance(subscriber.getBalance());
+
+        addSubscriberService.updateSubscriber(currentSubscriber);
+        return new ResponseEntity<Subscriber>(currentSubscriber, HttpStatus.OK);
+    }
+
+
+
+    //------------------- Delete a Subscriber --------------------------------------------------------
+
+    @RequestMapping(value = "/subscribers/delete", method = RequestMethod.POST)
+    public ResponseEntity<Void> deleteSubscriber(@RequestBody Long accountNo) {
+        System.out.println("Fetching & Deleting Subscriber with account number " + accountNo);
+
+        Subscriber currentSubscriber = getSubscriberService.getSubscriberByAccountNo(accountNo).get();
+
+        if (currentSubscriber == null) {
+            System.out.println("Subscriber with account number " + accountNo + " not found");
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+
+        removeSubscriberByAccountNoService.removeSubscriberByAccountNo(accountNo);
+        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    }
 
 }

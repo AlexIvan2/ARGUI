@@ -1,7 +1,7 @@
 package lv.javaguru.view;
 
 
-import lv.javaguru.businesslogic.GetAllSubscribersService;
+import lv.javaguru.businesslogic.GetSubscriberService;
 import lv.javaguru.domain.Subscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class PrintSubscribersListView implements View {
 
     @Autowired
-    private GetAllSubscribersService service;
+    private GetSubscriberService service;
 
     @Override
     public void execute() {

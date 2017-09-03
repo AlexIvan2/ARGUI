@@ -16,6 +16,8 @@ public interface AddSubscriberService {
 
     Response addSubscriber(String firstName, String lastName, String personalID, Double balance);
 
+    Response updateSubscriber(Subscriber subscriber);
+
 }
 
 @Component
@@ -39,6 +41,20 @@ class AddSubscriberServiceImpl implements AddSubscriberService {
                 .withBalance(balance).build();
 
         dao.save(subscriber);
+
+        return Response.createSuccessResponse();
+
+    }
+
+    @Override
+    @Transactional
+    public Response updateSubscriber(Subscriber subscriber) {
+        List<Error> validationErrors = addSubscriberValidator.validate(subscriber.getFirstName(), subscriber.getLastName(), subscriber.getPersonalID(), subscriber.getBalance());
+        if(!validationErrors.isEmpty()){
+            return Response.createFailResponse(validationErrors);
+        }
+
+        dao.update(subscriber);
 
         return Response.createSuccessResponse();
 

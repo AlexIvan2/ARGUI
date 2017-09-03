@@ -1,0 +1,12 @@
+.subscriber.ng-valid {
+    border-color: lightgreen;
+}
+.subscriber.ng-dirty.ng-invalid-required {
+    border-color: red;
+}
+.subscriber.ng-dirty.ng-invalid-minlength {
+    border-color: yellow;
+}
+.subscriber.ng-dirty.ng-invalid-pattern {
+    border-color: red;
+}

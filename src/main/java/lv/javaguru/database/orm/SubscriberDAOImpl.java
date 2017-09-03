@@ -53,6 +53,11 @@ public class SubscriberDAOImpl implements SubscriberDAO {
     }
 
     @Override
+    public void update(Subscriber subscriber) {
+        session().update(subscriber);
+    }
+
+    @Override
     public List<Subscriber> getAll() {
         return session()
                 .createCriteria(Subscriber.class)
