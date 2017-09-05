@@ -33,7 +33,7 @@ public class SubscriberController {
     //-------------------Retrieve All Subscribers--------------------------------------------------------
 
     @RequestMapping(value = "/subscribers/", method = RequestMethod.GET)
-    public ResponseEntity<List<Subscriber>> listAllUsers() {
+    public ResponseEntity<List<Subscriber>> listAllSubscribers() {
         List<Subscriber> subscribers = getSubscriberService.getAllSubscribers();
         if(subscribers.isEmpty()){
             return new ResponseEntity<List<Subscriber>>(HttpStatus.NO_CONTENT);

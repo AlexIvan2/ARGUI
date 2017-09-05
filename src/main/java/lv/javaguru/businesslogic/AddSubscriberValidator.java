@@ -1,6 +1,5 @@
 package lv.javaguru.businesslogic;
 
-
 import com.google.common.collect.Lists;
 import lv.javaguru.businesslogic.api.Error;
 import lv.javaguru.database.SubscriberDAO;

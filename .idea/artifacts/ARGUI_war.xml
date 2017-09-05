@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ARGUI:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ARGUI.war">
+      <element id="artifact" artifact-name="ARGUI:war exploded" />
+    </root>
+  </artifact>
+</component>

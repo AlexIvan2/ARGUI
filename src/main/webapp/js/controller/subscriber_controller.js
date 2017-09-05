@@ -20,7 +20,7 @@ angular.module('myApp').controller('SubscriberCtrl', ['$scope', 'SubscriberServi
                 $scope.subscribers = data;
             },
             function(errResponse){
-                console.error('Error while fetching Users');
+                console.error('Error while fetching Subscribers');
             }
         );
     }
@@ -63,7 +63,7 @@ angular.module('myApp').controller('SubscriberCtrl', ['$scope', 'SubscriberServi
             updateSubscriber($scope.subscriber);
             console.log('Subscriber updated with account number ', $scope.subscriber.accountNo);
         }
-        reset();
+        $scope.reset();
     };
 
     $scope.edit = function(accountNo) {
@@ -79,7 +79,7 @@ angular.module('myApp').controller('SubscriberCtrl', ['$scope', 'SubscriberServi
     $scope.remove = function(accountNo) {
         console.log('AccountNo to be deleted', accountNo);
         if($scope.subscriber.accountNo === accountNo) {
-            reset();
+            $scope.reset();
         }
         deleteSubscriber(accountNo);
     };

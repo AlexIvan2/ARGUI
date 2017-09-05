@@ -1,12 +1,9 @@
 package lv.javaguru;
 
 import lv.javaguru.config.SpringAppConfig;
+import lv.javaguru.view.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import lv.javaguru.view.AddSubscriberView;
-import lv.javaguru.view.PrintSubscribersListView;
-import lv.javaguru.view.RemoveSubscriberView;
-import lv.javaguru.view.View;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,11 +19,12 @@ public class ARGUIApplication {
         commands.put(1, applicationContext.getBean(AddSubscriberView.class));
         commands.put(2, applicationContext.getBean(PrintSubscribersListView.class));
         commands.put(3, applicationContext.getBean(RemoveSubscriberView.class));
+        commands.put(4, applicationContext.getBean(PrintTransactionsListView.class));
 
         while (true) {
             printProgramMenu();
             int menuItem = getFromUserMenuItemToExecute();
-            if (menuItem == 4) {
+            if (menuItem == 5) {
                 break;
             } else {
                 View view = commands.get(menuItem);
@@ -41,7 +39,8 @@ public class ARGUIApplication {
         System.out.println("1. Add subscriber");
         System.out.println("2. Print all subscribers");
         System.out.println("3. Remove subscriber");
-        System.out.println("4. Exit");
+        System.out.println("4. Show transactions");
+        System.out.println("5. Exit");
     }
 
     private static int getFromUserMenuItemToExecute() {
