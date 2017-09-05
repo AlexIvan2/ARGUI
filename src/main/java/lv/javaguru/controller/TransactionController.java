@@ -27,12 +27,10 @@ public class TransactionController {
     //-------------------Retrieve All Transactions--------------------------------------------------------
 
     @RequestMapping(value = "/transactions/", method = RequestMethod.GET)
-    public ResponseEntity<List<Transaction>> listAllTransactions() {
+    @ResponseBody
+    public List<Transaction> listAllTransactions() {
         List<Transaction> transactions = getTransactionService.getAllTransactions();
-        if(transactions.isEmpty()){
-            return new ResponseEntity<List<Transaction>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        return transactions;
     }
 
 

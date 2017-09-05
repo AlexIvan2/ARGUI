@@ -41,6 +41,7 @@ public class TransactionBuilder {
         Transaction transaction = new Transaction();
         transaction.setPrimaryUid(primaryUid);
         transaction.setSubscriber(subscriber);
+        transaction.setTransactionCode(transactionCode);
         transaction.setSalesTaxCode(salesTaxCode);
         transaction.setAmountBeforeTax(amountBeforeTax);
         transaction.setTransactionAmount(transactionAmount);

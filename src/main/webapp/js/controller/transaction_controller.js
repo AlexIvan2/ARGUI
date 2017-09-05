@@ -2,40 +2,39 @@
 
 angular.module('myApp').controller('TransactionCtrl', ['$scope', 'TransactionService', '$filter', 'ngTableParams', function($scope, TransactionService, $filter, NgTableParams) {
 
-    $scope.transaction={
-        primaryUid:null,
-        accountNo:'',
-        transactionCode:'',
-        salesTaxCode:'',
-        amountBeforeTax:'',
-        salesTaxAmount:'',
-        transactionAmount:'',
-        transactionDate:'',
-        transactionEffectiveDate:'',
-        billingYN:''
-    };
+    function init() {
+        $scope.transaction = {
+            primaryUid: null,
+            accountNo: '',
+            transactionCode: '',
+            salesTaxCode: '',
+            amountBeforeTax: '',
+            salesTaxAmount: '',
+            transactionAmount: '',
+            transactionDate: '',
+            transactionEffectiveDate: '',
+            billingYN: ''
+        };
 
-    $scope.transactions=[];
-    $scope.tableParams = new NgTableParams({
-        page: 1,
-        count: 10
-    }, {
-        dataset: $scope.transactions
-    });
-
-    fetchAllTransactions();
-
-    function fetchAllTransactions(){
-        TransactionService.fetchAllTransactions()
-            .then(
-            function(data) {
-                $scope.transactions = data;
-                $scope.tableParams.data = data;
-            },
-            function(errResponse){
-                console.error('Error while fetching Transactions');
+        $scope.tableParams = new NgTableParams({
+            page: 1,
+            count: 10
+        }, {
+            counts: [],
+            getData: function ($defer, params) {
+                TransactionService.fetchAllTransactions()
+                    .then(
+                        function(response) {
+                            params.total(response.length);
+                            $defer.resolve(response);
+                        },
+                        function(errResponse){
+                            $defer.reject();
+                        }
+                    );
+                return $defer.promise;
             }
-        );
+        });
     }
 
     $scope.updateTransaction = function(transaction) {
@@ -61,6 +60,8 @@ angular.module('myApp').controller('TransactionCtrl', ['$scope', 'TransactionSer
             transactionEffectiveDate:'',
             billingYN:''
         };
-    }
+    };
+
+    init();
 
 }]);
