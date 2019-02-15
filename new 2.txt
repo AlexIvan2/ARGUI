@@ -1,0 +1,104 @@
+import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+public class UnsafeExample {
+
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException, InstantiationException {
+        Field f = Unsafe.class.getDeclaredField("theUnsafe");
+        f.setAccessible(true);
+        Unsafe unsafe = (Unsafe) f.get(null);
+
+//        SomeClass someObject = new SomeClass();
+//        assertEquals(someObject.getA(), 1);
+//
+//        SomeClass unsafeObject = (SomeClass) unsafe.allocateInstance(SomeClass.class);
+//        assertEquals(unsafeObject.getA(), 0);
+
+//SECRET
+//        SecretHolder secretHolder = new SecretHolder();
+//        Field field = secretHolder.getClass().getDeclaredField("SECRET_VALUE");
+//        unsafe.putInt(secretHolder, unsafe.objectFieldOffset(field), 1);
+//
+//        assertTrue(secretHolder.secretIsDisclosed());
+
+
+        //OFF-HEAP MEMORY
+        long SUPER_SIZE = (long) 8;
+        OffHeapArray array = new OffHeapArray(SUPER_SIZE);
+        System.out.println(array.getAddress());
+        array.freeMemory();
+
+        array.set(SUPER_SIZE, (byte) 128);
+        System.out.println(array.get(SUPER_SIZE));
+        array.freeMemory();
+//        int sum = 0;
+//        for (int i = 0; i < 100; i++) {
+//            array.set((long) Integer.MAX_VALUE + i, (byte) 3);
+//            sum += array.get((long) Integer.MAX_VALUE + i);
+//        }
+//
+//        assertEquals(array.size(), SUPER_SIZE);
+//        assertEquals(sum, 300);
+    }
+}
+
+class SomeClass {
+    private long a;
+
+    public SomeClass() {
+        this.a = 1;
+    }
+
+    public long getA() {
+        return this.a;
+    }
+}
+
+class SecretHolder {
+    private int SECRET_VALUE = 0;
+
+    public boolean secretIsDisclosed() {
+        return SECRET_VALUE == 1;
+    }
+}
+
+class OffHeapArray {
+    private final static int BYTE = 1;
+    private long size;
+    private long address;
+
+    public OffHeapArray(long size) throws NoSuchFieldException, IllegalAccessException {
+        this.size = size;
+        address = getUnsafe().allocateMemory(size * BYTE);
+    }
+
+    private Unsafe getUnsafe() throws IllegalAccessException, NoSuchFieldException {
+        Field f = Unsafe.class.getDeclaredField("theUnsafe");
+        f.setAccessible(true);
+        return (Unsafe) f.get(null);
+    }
+
+    public void set(long i, byte value) throws NoSuchFieldException, IllegalAccessException {
+        getUnsafe().putByte(address + i * BYTE, value);
+    }
+
+    public int get(long idx) throws NoSuchFieldException, IllegalAccessException {
+        return getUnsafe().getByte(address + idx * BYTE);
+    }
+
+    public long size() {
+        return size;
+    }
+
+    public long getAddress() {
+        return address;
+    }
+
+    public void freeMemory() throws NoSuchFieldException, IllegalAccessException {
+        getUnsafe().freeMemory(address);
+    }
+}
